@@ -1,16 +1,18 @@
-FROM ubuntu:latest AS build
+FROM maven:3.9.9-eclipse-temurin-21 AS build
 
-RUN apt-get update
-RUN apt-get install openjdk21-jdk -y
-COPY . .
+WORKDIR /app
 
-RUN apt-get install maven -y
-RUN mvn clean install
+COPY pom.xml .
+COPY src ./src
 
-FROM openjdk:21-jdk-slim
+RUN mvn -B -DskipTests package
+
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-COPY --from=build /src/main/java/guard/agro/AgroGuardApplication.java app.jar
-
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+ENTRYPOINT ["java", "-jar", "app.jar"]

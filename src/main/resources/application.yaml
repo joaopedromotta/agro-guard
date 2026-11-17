@@ -4,7 +4,7 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:postgresql://dpg-dbu9qmu1egvs73fu60g0-a:5432/agro-guard
+    url: jdbc:postgresql://${DATABASE_URL}:${DATABASE_PORT}/agro-guard
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
   jpa:

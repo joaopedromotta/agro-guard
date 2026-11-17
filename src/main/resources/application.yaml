@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: agro-guard
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:postgresql://dpg-dbu9qmu1egvs73fu60g0-a:5432/agro-guard
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+app:
+  jwt:
+    secret: ${DATABASE_JWT_SECRET}
+    expiration-minutes: 120
+  cors:
+    allowed-origin: ${ALLOWED_ORIGIN}
+
+server:
+  servlet:
+    context-path: /
+  port: 8080
+  error:
+    include-stacktrace: never
+    include-message: never
+    include-binding-errors: never
+    include-exception: false
